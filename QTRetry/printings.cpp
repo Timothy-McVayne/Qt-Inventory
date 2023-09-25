@@ -1,40 +1,56 @@
 #include "printings.h"
-#include "APIHandler.h"
 
 printings::printings(QString card, QWidget *parent)
 	: QWidget(parent)
 {
-	QJsonArray printingList = addCardGetSets(card);
-	
-	QList<QUrl> uris = getURIS(printingList);
-	downloadImages(uris);
-	for (int i = 0; i < uris.size(); i++)
-		qDebug() << uris[i];
-	
-
 	ui.setupUi(this);
-	ui.listWidget->setViewMode(QListWidget::IconMode); 
-	ui.listWidget->setIconSize(QSize(200, 200));
+	ui.listWidget->setViewMode(QListWidget::IconMode);
+	ui.listWidget->setIconSize(QSize(400, 400));
 	ui.listWidget->setResizeMode(QListWidget::Adjust);
+
+	QJsonArray printingList = addCardGetSets(card);
+	for (int i = 0; i < printingList.size(); i++)
+		downloadAndDisplayImage(printingList[i].toObject());
+
+	connect(ui.listWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(onPrintingItemClicked(QListWidgetItem*)));
 }
 
 printings::~printings()
 {}
 
-QList<QUrl> printings::getURIS(QJsonArray list)
+void printings::downloadAndDisplayImage(QJsonObject card) 
 {
-	QList<QUrl> uris;
-	for (int i = 0; i < list.count(); i++)
-	{
-		QJsonObject temp = list[i].toObject();
-		QJsonObject temp2 = temp["image_uris"].toObject();
-		uris.push_back(QUrl(temp2["normal"].toString()));
-	}
+	QJsonObject temp = card["image_uris"].toObject();
+	QUrl imageUrl = temp["normal"].toString();
 
-	return uris;
+	QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+	QNetworkRequest request(imageUrl);
+	QNetworkReply* reply = manager->get(request);
+
+	connect(reply, &QNetworkReply::finished, this, [=]()
+		{
+			if (reply->error() == QNetworkReply::NoError)
+			{
+				QByteArray imageData = reply->readAll();
+				QPixmap pixmap;
+				pixmap.loadFromData(imageData);
+
+				if (!pixmap.isNull())
+				{
+					QListWidgetItem* item = new QListWidgetItem(QIcon(pixmap), card["set_name"].toString());
+					item->setData(Qt::UserRole, card);
+					ui.listWidget->addItem(item);
+				}
+			}
+		reply->deleteLater();
+		});
 }
 
-void printings::downloadImages(QList<QUrl> list)
-{
-
+void printings::onPrintingItemClicked(QListWidgetItem* card)
+{ 
+	QJsonObject cardJson = card->data(Qt::UserRole).toJsonObject();
+	bool ok;
+	int quant = QInputDialog::getInt(this, tr("Quantity"), tr("How many would you like to add?: "), 0, 0, 2147483647, 1, &ok, Qt::MSWindowsFixedSizeDialogHint);
+	if (ok)
+		addToDB(cardJson, quant);
 }

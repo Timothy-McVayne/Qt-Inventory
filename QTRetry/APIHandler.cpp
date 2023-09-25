@@ -2,9 +2,7 @@
 
 QJsonArray addCardGetSets(QString& cardName)
 {
-    std::cout << "before nameprep" << std::endl;
     namePrep(cardName);
-    std::cout << "after nameprep name is: " << cardName.toStdString() <<  std::endl;
     QEventLoop eventLoop;
 
     QNetworkAccessManager mgr;
@@ -16,7 +14,6 @@ QJsonArray addCardGetSets(QString& cardName)
 
     if (reply->error() == QNetworkReply::NoError)
     {
-        std::cout << "API request succesful" << std::endl;
         QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
         QJsonObject obj = doc.object();
         delete reply;

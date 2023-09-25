@@ -1,7 +1,12 @@
 #pragma once
 
 #include <QWidget>
+#include "qmessagebox.h"
+#include "qinputdialog.h"
+#include "qdir.h"
 #include "ui_printings.h"
+#include "APIHandler.h"
+#include "DBmng.h"
 
 class printings : public QWidget
 {
@@ -13,6 +18,8 @@ public:
 
 private:
 	Ui::printingsClass ui;
-	QList<QUrl> getURIS(QJsonArray list);
-	void downloadImages(QList<QUrl> list);
+	void downloadAndDisplayImage(QJsonObject);
+
+private slots:
+	void onPrintingItemClicked(QListWidgetItem*);
 };

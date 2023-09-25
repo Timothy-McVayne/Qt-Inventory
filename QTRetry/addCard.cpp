@@ -1,5 +1,4 @@
 #include "addCard.h"
-#include "printings.h"
 
 addCard::addCard(QWidget *parent)
 	: QWidget(parent)
@@ -17,10 +16,7 @@ void addCard::on_pushButton_clicked()
 
 void addCard::on_lineEdit_returnPressed()
 {
-	QString card = ui.lineEdit->text();
-	hide();
-	printings* wnd = new printings(card);
-	wnd->show();
+	on_pushButton_clicked(); 
 }
 
 addCard::~addCard()

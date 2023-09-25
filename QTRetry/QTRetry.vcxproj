@@ -96,6 +96,7 @@
     <QtMoc Include="QTRetry.h" />
     <ClCompile Include="addCard.cpp" />
     <ClCompile Include="APIHandler.cpp" />
+    <ClCompile Include="DBmng.cpp" />
     <ClCompile Include="printings.cpp" />
     <ClCompile Include="QTRetry.cpp" />
     <ClCompile Include="main.cpp" />

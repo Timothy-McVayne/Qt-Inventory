@@ -1,6 +1,11 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
+#include "addCard.h"
+#include "DBmng.h"
+#include "APIHandler.h"
+#include "qsqltablemodel.h"
+#include "qsqlrecord.h"
 #include "ui_QTRetry.h"
 
 class QTRetry : public QMainWindow
@@ -16,4 +21,5 @@ private:
 
 public slots:
     void on_pushButton1_clicked();
+    void updateList();
 };

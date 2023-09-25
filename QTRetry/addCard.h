@@ -2,6 +2,7 @@
 
 #include <QWidget>
 #include "ui_addCard.h"
+#include "printings.h"
 
 class addCard : public QWidget
 {
