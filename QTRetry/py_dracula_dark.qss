@@ -224,6 +224,7 @@ QTableWidget::item{
 QTableWidget::item:selected{
 	background-color: rgb(189, 147, 249);
 }
+
 QHeaderView::section{
 	background-color: rgb(33, 37, 43);
 	max-width: 30px;

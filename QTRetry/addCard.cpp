@@ -12,6 +12,7 @@ void addCard::on_pushButton_clicked()
 	hide();
 	printings* wnd = new printings(card);
 	wnd->show();
+	connect(wnd, &printings::cardAdded, this, &addCard::cardAddedfromPrints);
 }
 
 void addCard::on_lineEdit_returnPressed()

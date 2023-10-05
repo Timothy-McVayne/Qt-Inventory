@@ -22,4 +22,7 @@ private:
 
 private slots:
 	void onPrintingItemClicked(QListWidgetItem*);
+
+signals:
+	void cardAdded();
 };

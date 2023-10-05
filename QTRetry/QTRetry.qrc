@@ -1,4 +1,6 @@
 <RCC>
-    <qresource prefix="QTRetry">
+    <qresource prefix="/QTRetry"/>
+    <qresource prefix="/fonts">
+        <file>Beleren2016-Bold.ttf</file>
     </qresource>
 </RCC>

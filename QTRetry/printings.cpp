@@ -1,5 +1,6 @@
 #include "printings.h"
 
+//creates the list of card images
 printings::printings(QString card, QWidget *parent)
 	: QWidget(parent)
 {
@@ -18,6 +19,7 @@ printings::printings(QString card, QWidget *parent)
 printings::~printings()
 {}
 
+//Downloads images from the normal url in the card jsonobject and adds it to the list 
 void printings::downloadAndDisplayImage(QJsonObject card) 
 {
 	QJsonObject temp = card["image_uris"].toObject();
@@ -46,6 +48,7 @@ void printings::downloadAndDisplayImage(QJsonObject card)
 		});
 }
 
+//Creates quantity box and emits the signal to update main list CHANGE GET INT SO IT CAN BE STYLED
 void printings::onPrintingItemClicked(QListWidgetItem* card)
 { 
 	QJsonObject cardJson = card->data(Qt::UserRole).toJsonObject();
@@ -53,4 +56,8 @@ void printings::onPrintingItemClicked(QListWidgetItem* card)
 	int quant = QInputDialog::getInt(this, tr("Quantity"), tr("How many would you like to add?: "), 0, 0, 2147483647, 1, &ok, Qt::MSWindowsFixedSizeDialogHint);
 	if (ok)
 		addToDB(cardJson, quant);
+
+	emit this->cardAdded();
+
+	this->hide(); 
 }

@@ -42,8 +42,8 @@ void addToDB(QJsonObject card, int quant)
 	q.addBindValue(card["set_name"].toString());
 	q.addBindValue(card["cmc"].toInt());
 	q.addBindValue(card["oracle_text"].toString());
-	q.addBindValue(card["power"].toInt());
-	q.addBindValue(card["toughness"].toInt());
+	q.addBindValue(card["power"].toString().toInt());;
+	q.addBindValue(card["toughness"].toString().toInt());
 	q.addBindValue(card["type_line"].toString());
 	q.addBindValue(card["foil"].toBool());
 	q.addBindValue(card["mana_cost"].toString());

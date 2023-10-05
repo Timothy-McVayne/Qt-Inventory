@@ -18,4 +18,7 @@ private:
 public slots:
 	void on_pushButton_clicked();
 	void on_lineEdit_returnPressed();
+
+signals:
+	void cardAddedfromPrints();
 };
